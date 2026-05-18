@@ -1,6 +1,6 @@
 # Usage
-# docker build -t mosazhaw/djl-footwear-classification .
-# docker run --name djl-footwear-classification -p 8080:8080 -d mosazhaw/djl-footwear-classification
+# docker build -t andjelinatosic/djl-footwear-classification .
+# docker run --name djl-footwear-classification -p 8080:8080 -d andjelinatosic/djl-footwear-classification
 
 FROM eclipse-temurin:25-jdk-noble
 
@@ -12,6 +12,8 @@ COPY .mvn .mvn
 COPY pom.xml mvnw ./
 
 # Install
+RUN sed -i 's/\r$//' mvnw
+RUN chmod +x mvnw
 RUN ./mvnw -Dmaven.test.skip=true package
 
 # Docker Run Command
