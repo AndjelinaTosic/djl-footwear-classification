@@ -1,3 +1,4 @@
 # Maven wrapper
 mvnw text eol=lf
 mvnw.cmd text eol=crlf
+*.params filter=lfs diff=lfs merge=lfs -text

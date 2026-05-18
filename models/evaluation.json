@@ -1,0 +1,9 @@
+{
+  "epochs": 4,
+  "batchSize": 32,
+  "architecture": "ResNet-50",
+  "trainAccuracy": "0.85625",
+  "trainLoss": "0.49509",
+  "validateAccuracy": "0.69375",
+  "validateLoss": "0.99035"
+}
