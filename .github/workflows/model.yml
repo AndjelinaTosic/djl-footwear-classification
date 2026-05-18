@@ -1,0 +1,42 @@
+name: ModelOps (Update Model)
+# Requires GitHub Action Secrets: (none - model files are committed to repo)
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout repo content
+        uses: actions/checkout@v3
+
+      - name: set up java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: make mvnw executable
+        run: chmod +x mvnw
+
+      - name: train model
+        run: ./mvnw exec:java -Dmaven.test.skip=true
+
+      - name: commit updated model
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add models/
+          git diff --staged --quiet || git commit -m "Update model [skip ci]"
+          git push
